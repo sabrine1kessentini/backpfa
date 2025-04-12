@@ -22,7 +22,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('jwt.auth')->group(function () {
     // Authentification
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/profile', [AuthController::class, 'getUserProfile']);
+    Route::get('/profile', [AuthController::class, 'userProfile']);
     
     // Emploi du temps
     Route::get('/mon-emploi', [EmploiController::class, 'getEmploi']);

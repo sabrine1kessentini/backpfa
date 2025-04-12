@@ -9,15 +9,14 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
         'email',
         'password',
         'filiere',
-        'niveau',
-        'groupe'
+        'niveau'
     ];
 
     protected $hidden = [
@@ -44,8 +43,7 @@ class User extends Authenticatable implements JWTSubject
             'name' => $this->name,
             'email' => $this->email,
             'filiere' => $this->filiere,
-            'niveau' => $this->niveau,
-            'groupe' => $this->groupe
+            'niveau' => $this->niveau
         ];
     }
 
