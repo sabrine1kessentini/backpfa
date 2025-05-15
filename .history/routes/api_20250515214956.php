@@ -30,7 +30,7 @@ Route::middleware('jwt.auth')->group(function () {
     // Routes pour les documents
     Route::get('/documents', [DocumentController::class, 'index']);
     Route::post('/documents', [DocumentController::class, 'store']);
-    Route::get('/documents/{id}/download', [DocumentController::class, 'downloadDocument']);
+    Route::get('/documents/{document}/download', [DocumentController::class, 'download']);
 });
     
     // Notifications

@@ -20,10 +20,10 @@ class Document extends Model
     ];
 
     /**
-     * Relation avec l'utilisateur
+     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\User::class);
+        return $this->belongsTo(User::class);
     }
 }

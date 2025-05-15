@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
-public function index()
-{
-    /** @var \App\Models\User $user */
-    $user = Auth::user();
-    $documents = $user->documents()->latest()->get();
-    
-    return response()->json(['documents' => $documents]);
-}
+    public function index()
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $documents = $user->documents()->latest()->get();
+        
+        return response()->json(['documents' => $documents]);
+    }
 
     public function downloadDocument($id)
     {

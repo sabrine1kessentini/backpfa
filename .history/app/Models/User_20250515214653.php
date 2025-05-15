@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Dom\Document;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -9,7 +10,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory ,Notifiable;
+    use HasFactory;
 
     protected $fillable = [
         'name',
@@ -51,6 +52,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function documents()
     {
-        return $this->hasMany(\App\Models\Document::class);
+        return $this->hasMany(Document::class);
     }
 }
