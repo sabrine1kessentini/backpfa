@@ -19,6 +19,10 @@ class NotificationController extends Controller
                     ->orWhere([
                         ['target_type', 'level'],
                         ['target_value', $request->user()->niveau]
+                    ])
+                    ->orWhere([
+                        ['target_type', 'groupe'],
+                        ['target_value', $request->user()->groupe]
                     ]);
             })
             ->with('targets')
@@ -32,7 +36,7 @@ class NotificationController extends Controller
         $validated = $request->validate([
             'message' => 'required|string',
             'targets' => 'required|array',
-            'targets.*.type' => 'required|in:level,filiere,all',
+            'targets.*.type' => 'required|in:level,filiere,groupe,all',
             'targets.*.value' => 'nullable|string'
         ]);
 

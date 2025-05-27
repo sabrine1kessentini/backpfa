@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
-use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DocumentController extends Controller
 {
@@ -25,31 +24,21 @@ class DocumentController extends Controller
         ]);
     }
 
-    public function download($id): BinaryFileResponse
+    public function download($id): StreamedResponse
     {
         /** @var User $user */
         $user = Auth::user();
         $document = $user->documents()->findOrFail($id);
 
-        // Chemin correct en utilisant les helpers de Laravel
-        $path = storage_path('app/public/' . ltrim($document->file_path, '/'));
-
-        if (!file_exists($path)) {
-            abort(404, "Le fichier demandé n'existe pas sur le serveur.");
+        /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
+        $disk = Storage::disk('public');
+        
+        if (!$disk->exists($document->file_path)) {
+            abort(404, 'Fichier non trouvé');
         }
 
-        // Créer une notification pour le téléchargement
-        $notification = Notification::create([
-            'message' => "Vous avez téléchargé le document: {$document->title}",
-            'user_id' => $user->id
-        ]);
-
-        // Ajouter les cibles de la notification (ici, uniquement l'utilisateur concerné)
-        $notification->targets()->create([
-            'target_type' => 'all',
-            'target_value' => null
-        ]);
-
+        // Solution alternative si l'erreur persiste
+        $path = storage_path('app/public/' . $document->file_path);
         $name = $document->title . '.pdf';
 
         return response()->download($path, $name, [

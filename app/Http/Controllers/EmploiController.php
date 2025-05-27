@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Emploi;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -53,6 +54,18 @@ class EmploiController extends Controller
             ['groupe' => $request->groupe],
             ['image_path' => $publicPath]
         );
+
+        // Créer une notification pour la mise à jour de l'emploi du temps
+        $notification = Notification::create([
+            'message' => "L'emploi du temps du groupe {$request->groupe} a été mis à jour",
+            'user_id' => $request->user()->id
+        ]);
+
+        // Ajouter les cibles de la notification (tous les étudiants du groupe)
+        $notification->targets()->create([
+            'target_type' => 'groupe',
+            'target_value' => $request->groupe
+        ]);
 
         return response()->json([
             'message' => 'Emploi du temps mis à jour avec succès',
