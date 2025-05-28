@@ -38,11 +38,10 @@ Route::middleware('jwt.auth')->group(function () {
 
     Route::get('/payments', [PaymentController::class, 'index']);
 
-    
-    Route::get('/notes', [NoteController::class, 'index']);
-
 });
-    
+    Route::middleware('auth:api')->group(function() {
+    Route::get('/notes', [NoteController::class, 'index']);
+});
     // Notifications
     Route::prefix('notifications')->group(function () {
         Route::get('/', [NotificationController::class, 'index']);
