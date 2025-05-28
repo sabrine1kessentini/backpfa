@@ -66,7 +66,7 @@ class DocumentController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error("Erreur de téléchargement: " . $e->getMessage());
+            \Log::error("Erreur de téléchargement: " . $e->getMessage());
             abort(500, "Une erreur est survenue lors du téléchargement : " . $e->getMessage());
         }
     }

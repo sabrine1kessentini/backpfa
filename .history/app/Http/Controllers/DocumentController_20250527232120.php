@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-
 class DocumentController extends Controller
 {
     public function index()
@@ -66,7 +65,7 @@ class DocumentController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error("Erreur de téléchargement: " . $e->getMessage());
+            \Log::error("Erreur de téléchargement: " . $e->getMessage());
             abort(500, "Une erreur est survenue lors du téléchargement : " . $e->getMessage());
         }
     }

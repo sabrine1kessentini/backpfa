@@ -1,24 +1,21 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
+class Payment extends Model
 {
-    use HasFactory;
+     use HasFactory;
 
     protected $fillable = [
-        'message',
-        'type',
-        'user_id'
+        'user_id',
+        'payment_mode',
+        'amount',
+        'reference',
+        'status',
+        'notes'
     ];
-
-    public function targets()
-    {
-        return $this->hasMany(NotificationTarget::class);
-    }
 
     public function user()
     {

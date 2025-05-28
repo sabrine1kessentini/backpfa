@@ -32,11 +32,6 @@ Route::middleware('jwt.auth')->group(function () {
     Route::get('/documents', [DocumentController::class, 'index']);
     Route::post('/documents', [DocumentController::class, 'store']);
     Route::get('/documents/{id}/download', [DocumentController::class, 'download']);
-
-    // Paiements
-
-    Route::get('/payments', [PaymentController::class, 'index']);
-
 });
     
     // Notifications
@@ -45,3 +40,5 @@ Route::middleware('jwt.auth')->group(function () {
         Route::post('/', [NotificationController::class, 'store']);
         Route::delete('/{id}', [NotificationController::class, 'destroy']);
     });
+
+    Route::middleware('auth:sanctum')->get('/payments', [PaymentController::class, 'index']);

@@ -34,8 +34,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::get('/documents/{id}/download', [DocumentController::class, 'download']);
 
     // Paiements
-
-    Route::get('/payments', [PaymentController::class, 'index']);
+    Route::middleware('auth:sanctum')->get('/payments', [PaymentController::class, 'index']);
 
 });
     
