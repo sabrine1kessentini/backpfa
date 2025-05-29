@@ -12,7 +12,12 @@ class Notification extends Model
     protected $fillable = [
         'message',
         'type',
-        'user_id'
+        'user_id',
+        'read_at'
+    ];
+
+    protected $casts = [
+        'read_at' => 'datetime'
     ];
 
     public function targets()

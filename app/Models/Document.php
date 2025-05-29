@@ -19,6 +19,23 @@ class Document extends Model
         'created_at' => 'datetime:Y-m-d H:i:s',
     ];
 
+    protected static function booted()
+    {
+        static::created(function ($document) {
+            // Créer la notification
+            $notification = $document->user->notifications()->create([
+                'message' => 'Nouveau document ajouté : ' . $document->title,
+                'type' => 'document'
+            ]);
+
+            // Cibler tous les utilisateurs
+            $notification->targets()->create([
+                'target_type' => 'all',
+                'target_value' => null
+            ]);
+        });
+    }
+
     /**
      * Relation avec l'utilisateur
      */

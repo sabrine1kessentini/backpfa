@@ -29,7 +29,11 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::put('/profile', [AuthController::class, 'updateProfile']);
     
     // Emploi du temps
-Route::get('/mon-emploi', [EmploiController::class, 'getEmploi']);
+    Route::prefix('emploi')->group(function () {
+        Route::get('/', [EmploiController::class, 'getEmploi']);
+        Route::get('/semestre/{semestre}', [EmploiController::class, 'getEmploiBySemestre']);
+    });
+    
     // Documents
     Route::prefix('documents')->group(function () {
         Route::get('/', [DocumentController::class, 'index']);
