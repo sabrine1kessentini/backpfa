@@ -30,8 +30,7 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::put('/profile', [AuthController::class, 'updateProfile']);
     
     // Emploi du temps
-    Route::get('/mon-emploi', [EmploiController::class, 'getEmploi']);
-    
+Route::get('/mon-emploi', [EmploiController::class, 'getEmploi']);
     // Documents
     Route::prefix('documents')->group(function () {
         Route::get('/', [DocumentController::class, 'index']);
@@ -65,11 +64,10 @@ Route::middleware(['jwt.auth'])->group(function () {
         Route::delete('/{id}', [NotificationController::class, 'destroy']);
     });
 
-    // Réclamations
-    Route::prefix('reclamations')->group(function () {
-        Route::post('/', [ReclamationController::class, 'store']);
-        Route::get('/{reclamation}', [ReclamationController::class, 'show']);
+    Route::middleware('jwt.auth')->group(function () {
+        Route::post('/reclamations', [ReclamationController::class, 'store']);
+        Route::get('/reclamations/{reclamation}', [ReclamationController::class, 'show']);
         Route::get('/user/reclamations', [ReclamationController::class, 'userReclamations']);
-        Route::patch('/{reclamation}/status', [ReclamationController::class, 'updateStatus']);
-    });
+        Route::patch('/reclamations/{reclamation}/status', [ReclamationController::class, 'updateStatus']);
+    }); 
 });

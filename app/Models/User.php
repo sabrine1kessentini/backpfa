@@ -68,4 +68,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Note::class);
     }
+
+    /**
+     * Get the reclamations for the user.
+     */
+    public function reclamations()
+    {
+        return $this->hasMany(Reclamation::class);
+    }
 }
